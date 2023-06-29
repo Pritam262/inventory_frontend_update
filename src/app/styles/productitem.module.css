@@ -1,0 +1,29 @@
+.main {
+    width: 100vw;
+    height: max-content;
+
+}
+
+.container {
+    width: 100vw;
+    height: max-content;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    /* background-color: #727272; */
+    padding: 10px;
+}
+
+.card {
+    width: 200px;
+    height: 250px;
+    /* background-color: rgba(255, 255, 255, 0.8); */
+    border: 1px solid rgba(255, 0, 0, 0.8);
+    /* padding: 20px; */
+    font-size: 20px;
+    /* text-align: center; */
+}
+.title{
+    font-size: 22px;
+    text-align: center;
+    padding: .5rem 0;
+}

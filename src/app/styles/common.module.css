@@ -1,0 +1,17 @@
+.df{
+display: flex;
+
+}
+.ai_c{
+    align-items: center;
+    /* background-color: brown; */
+}
+.jc_sb{
+    justify-content: space-between;
+}
+.wh_30{
+    width: 30%;
+}
+.ul_none{
+    list-style: none;
+}
