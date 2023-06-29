@@ -3,7 +3,7 @@
 First, run the development server:
 
 ```bash
-clone the git file
+At first clone the git file
 npm install
 npm run dev
 # or
