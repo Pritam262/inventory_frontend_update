@@ -13,7 +13,10 @@ function Home() {
         // console.log("Set product", product)
     }
     const handleClick = () => {
-        console.log("My cart", cart)
+        const inputTagArray = [...cartList,cartList[0]]
+        setCartList(inputTagArray)
+        
+        
     }
     const addtoCart = (e) => {
         let myCart = cart;
@@ -29,9 +32,13 @@ function Home() {
         console.log(cardCode)
 
     }
-    // console.log("Cart", cart, Date.now().toString())
-    // console.log("Type of cart.map", typeof cart)
+
+
 console.log("Cart List", cartList)
+console.log("Cart", cart)
+
+const data = document.key(1)
+console.log(data)
     return (
         <div className={Styles.container}>
             <div className={Styles.leftSide}>
@@ -46,19 +53,23 @@ console.log("Cart List", cartList)
                 <form autoComplete='off' className={Styles.addCart}>
                     <h4 className={Styles.heading}>Buy Product</h4>
 
-                    <button type="submit" onClick={handleClick}>Add product</button>
                     {/* Add dynamically input tag, which is write downn below */}
                     {cartList.map((singleProduct, index) => {
+                        return (
                         <div className={Styles.productDetails} key={index}>
                             <input type="text" className={Styles.input} name="title" id="" placeholder='Product name' onChange={onChange} />
                             <input type="text" className={Styles.input} name="id" id="" placeholder='Product Id' onChange={onChange} />
                             <input type="number" className={Styles.input} name="qty" id="" placeholder='Product quantity' onChange={onChange} />
                             <input type="number" className={Styles.input} name="price" id="" placeholder='Product Price' onChange={onChange} />
                             <AiOutlineMinusCircle className={Styles.addIcon} />
-                            <AiOutlinePlusCircle className={Styles.addIcon} />
+
+                            {cartList.length -1 === index && <AiOutlinePlusCircle className={Styles.addIcon} onClick={handleClick}/>}
+                            
 
                         </div>
+                        )
                     })}
+                    {/* On submit create an state which store all the created input tag's value   like {cardcode:Date.now().toString(), product:{{{ title: "product1", id: "1", qty: "1", price: "1" },{ title: "product2", id: "2", qty: "2", price: "3" }}}  */}
 
                     <button type="submit" >Save</button> <br />
                 </form>
