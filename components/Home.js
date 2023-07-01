@@ -24,14 +24,37 @@ const removeInputList = (index)=>{
     setCartList(values)
 }
 
-const addInputList = ()=>{
+const addInputList = (e)=>{
+    e.preventDefault()
 setCartList([...cartList,{ title: "", id: "", qty: "", price: "" }])
 }
-const handleSubmit = (e)=>{
-    e.preventDefault()
+const handleSubmit = ()=>{
+    
     let cartCode = Number(Date.now().toString())
-    localStorage.setItem(JSON.stringify(cartCode), JSON.stringify({cartCode,cartList}))
-    console.log({cartCode, cartList})
+    // setCartList({cartCode,cartList})
+console.log(cartList.length)
+    for (let i = 0; i < cartList.length; i++) {
+        const element = cartList[i];
+       if (element){
+            
+            const boll =element.title.length>1 && element.id.length>1 && element.qty.length>1 && element.price.length>1
+            console.log("Element price length",element.price.length)
+            console.log("Value of bool", boll)
+            if(boll===true){
+                localStorage.setItem(JSON.stringify(cartCode), JSON.stringify({cartCode,cartList}))
+                console.log({cartCode, cartList})
+                setCartList([{ title: "", id: "", qty: "", price: "" }])
+            }
+            else{
+                console.error("Fill every fiels")
+            }
+        }
+        else(console.log("Element is not available"))
+
+    }
+    
+    // localStorage.setItem(JSON.stringify(cartCode), JSON.stringify({cartCode,cartList}))
+    // console.log({cartCode, cartList})
 
 }
 const getData = (key)=>{
@@ -39,7 +62,9 @@ const getData = (key)=>{
     console.log("Cart data",data)
 
 }
-    return (
+
+
+return (
         <div className={Styles.container}>
             <div className={Styles.leftSide}>
 
@@ -79,7 +104,7 @@ const getData = (key)=>{
                         )
                     })}
 
-                    <button type='submit' onClick={()=>handleSubmit}>Save</button> <br />
+                    <button type='submit' onClick={()=>handleSubmit()}>Save</button> <br />
                     <button type="button" onClick={()=>getData(1688205053723)}>Get Data</button>
 
                     
