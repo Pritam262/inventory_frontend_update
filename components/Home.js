@@ -30,39 +30,6 @@ setCartList([...cartList,{ title: "", id: "", qty: "", price: "" }])
 }
 
 
-// const handleSubmit = ()=>{
-    
-//     let cartCode = Number(Date.now().toString())
-//     // setCartList({cartCode,cartList})
-// console.log(cartList.length)
-// console.log(cartList)
-//     for (let i = 0; i < cartList.length; i++) {
-//         const element = cartList[i];
-//         console.log("Element", i, element)
-//        if (element, i){
-            
-//             const boll =element.title.length>1 && element.id.length>1 && element.qty.length>1 && element.price.length>1
-//             // console.log("Element price length",element.price.length)
-//             // console.log("Value of bool", boll)
-//             if(boll=== true && cartList[i]){
-//                 localStorage.setItem(JSON.stringify(cartCode), JSON.stringify({cartCode,cartList}))
-//                 console.log({cartCode, cartList})
-//                 setCartList([{ title: "", id: "", qty: "", price: "" }])
-//             }
-//             else{
-//                 console.error("Fill every fiels")
-//             }
-//         }
-//         else(console.log("Element is not available"))
-
-//     }
-    
-//     // localStorage.setItem(JSON.stringify(cartCode), JSON.stringify({cartCode,cartList}))
-//     // console.log({cartCode, cartList})
-
-// }
-
-
 
 const handleSubmit = () => {
     let cartCode = Number(Date.now().toString());
