@@ -4,103 +4,173 @@ import Styles from "@/app/styles/home.module.css"
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai"
 import CartItem from './CartItem'
 function Home() {
-  
+
 
     const [subTotal, setSubTotal] = useState(0)
 
     const [cartList, setCartList] = useState([{ title: "", id: "", qty: "", price: "" }])
-  const [data, setData] = useState({})
+
+    const [cartItem, setCartItem] = useState([]);
 
     const handleChange = (index, event) => {
         const values = [...cartList];
         values[index][event.target.name] = event.target.value
-       
+
         setCartList(values)
 
     }
 
-const removeInputList = (index)=>{
-    const values = [...cartList];
-    values.splice(index,1);
-    setCartList(values)
-}
-
-const addInputList = (e)=>{
-    e.preventDefault()
-setCartList([...cartList,{ title: "", id: "", qty: "", price: "" }])
-}
-
-
-
-const handleSubmit = () => {
-    if (cartList.length === 0) {
-      console.error("Cart is empty");
-      return;
+    const removeInputList = (index) => {
+        const values = [...cartList];
+        values.splice(index, 1);
+        setCartList(values)
     }
-  
-    let totalPrice = 0;
-    for (let i = 0; i < cartList.length; i++) {
-      const element = cartList[i];
-  
-      if (
-        element.title.length > 0 &&
-        element.id.length > 0 &&
-        element.qty > 0 &&
-        element.price > 0
-      ) {
-        const itemPrice = element.qty * element.price;
-        totalPrice += itemPrice;
-      } else {
-        console.error("Please fill in all fields for item", i + 1);
-        return;
-      }
+
+    const addInputList = (e) => {
+        e.preventDefault()
+        setCartList([...cartList, { title: "", id: "", qty: "", price: "" }])
     }
-  
-    const cartCode = Number(Date.now().toString());
-    const cartData = { cartCode, cartList, totalPrice };
-  
-    localStorage.setItem(cartCode.toString(), JSON.stringify(cartData));
-  
-    console.log("Cart data saved to local storage:", cartData);
-  
-    setCartList([{ title: "", id: "", qty: "", price: "" }]);
-  };
-  
 
 
 
+    const handleSubmit = () => {
+        if (cartList.length === 0) {
+            console.error("Cart is empty");
+            return;
+        }
 
-  const getData = () => {
-    const keys = Object.keys(localStorage);
-    const filteredKeys = keys.filter((key) => key.length >= 12 && !isNaN(Number(key)));
-  
-    const data = {};
-  
-    filteredKeys.forEach((key) => {
-      const value = JSON.parse(localStorage.getItem(key));
-      data[key] = value;
-    });
-  
-    console.log("Cart data", data);
-    setData(data);
-  };
-  
-  
+        let totalPrice = 0;
+        for (let i = 0; i < cartList.length; i++) {
+            const element = cartList[i];
+
+            if (
+                element.title.length > 0 &&
+                element.id.length > 0 &&
+                element.qty > 0 &&
+                element.price > 0
+            ) {
+                const itemPrice = element.qty * element.price;
+                totalPrice += itemPrice;
+            } else {
+                console.error("Please fill in all fields for item", i + 1);
+                return;
+            }
+        }
+
+        const cartCode = Number(Date.now().toString());
+        const cartData = { cartCode, cartList, totalPrice };
+
+        localStorage.setItem(cartCode.toString(), JSON.stringify(cartData));
+
+        console.log("Cart data saved to local storage:", cartData);
+
+        setCartList([{ title: "", id: "", qty: "", price: "" }]);
+    };
+
+    
+
+{/* On page reload setThe cartItem that show in CartItem section. Which data is CartCode and totalPrice */}
 
 
 
-return (
+    useEffect(() => {
+        const keys = Object.keys(localStorage);
+
+        const filteredKeys = keys.filter((key) => key.length >= 6 && !isNaN(Number(key)));
+
+        const data = {};
+
+
+
+        filteredKeys.forEach((key) => {
+            // console.log(key)
+            const value = JSON.parse(localStorage.getItem(key));
+            data[key] = value;
+
+            // console.log("Value", value)
+            // setgetData(value)
+            const extractedData = value.map((item) => {
+                const cartCode = Object.keys(item)[0];
+                const totalPrice = item.totalPrice;
+                return { cartCode, totalPrice };
+              });
+            
+              setCartItem(extractedData);
+        });
+
+        // console.log("Cart data", data);
+
+
+        // setgetData(localStorage.getItem(key))
+
+
+    }, [])
+
+//     const data = [{
+//         1688298857334:
+//         {
+//             "cartCode": 1688298857334,
+
+//             "cartList": {
+//                 0: { "title": 'bvbb', "id": '2452', "qty": '52', "price": '22' },
+//                 1: { "title": 'bbnb', "id": '353', "qty": '353', "price": '3' }
+//             },
+//         },
+//         "totalPrice": "2203"
+//     },
+//     {
+//         1688298857334:
+//         {
+//             "cartCode": 1688298857334,
+
+//             "cartList": {
+//                 0: { "title": 'bvbb', "id": '2452', "qty": '52', "price": '22' },
+//                 1: { "title": 'bbnb', "id": '353', "qty": '353', "price": '3' }
+//             },
+//         },
+//         "totalPrice": "2203"
+//     }
+// ]
+
+console.log(cartItem)
+
+    const getStorageData = () => {
+
+        const keys = Object.keys(localStorage);
+        const filteredKeys = keys.filter((key) => key.length >= 12 && !isNaN(Number(key)));
+
+        const data = [];
+
+        filteredKeys.forEach((key) => {
+            const value = JSON.parse(localStorage.getItem(key));
+            data[key] = value;
+        });
+
+        console.log("Cart data", data);
+        setgetData(data)
+
+      
+    };
+// 
+
+    return (
         <div className={Styles.container}>
             <div className={Styles.leftSide}>
 
+            {/* I want hare only show cartCode and total price */}
+
+
+
                 {/* What is Unhandled Runtime Error: Which return cart.map is not a function*/}
 
-                { /*  {cart.product && cart.product.map(element => {
-                    <CartItem product={element} key={element.cardCode} keyValue={element.cardCode} />
+                {    /* 
+                 {getdata && getdata.map((key,item) => {
+                    <CartItem product={item} key={item.cardCode} keyValue={item.cardCode} />
 
                 })}
-                */
-                }
+
+       
+            */   }
 
 
             </div>
@@ -112,27 +182,27 @@ return (
                     {cartList.map((singleProduct, index) => {
                         return (
                             <div className={Styles.productDetails} key={index}>
-                                <input type="text" className={Styles.input} name="title" id="" placeholder='Product name' onChange={event => handleChange(index, event)} value={singleProduct.title} required/>
-                                <input type="text" className={Styles.input} name="id" id="" placeholder='Product Id' onChange={event => handleChange(index, event)} value={singleProduct.id} required/>
-                                <input type="number" className={Styles.input} name="qty" id="" placeholder='Product quantity' onChange={event => handleChange(index, event)} value={singleProduct.qty} required/>
-                                <input type="number" className={Styles.input} name="price" id="" placeholder='Product Price' onChange={event => handleChange(index, event)} value={singleProduct.price} required/>
-                                <AiOutlineMinusCircle className={Styles.addIcon} onClick={()=>removeInputList()}/>
+                                <input type="text" className={Styles.input} name="title" id="" placeholder='Product name' onChange={event => handleChange(index, event)} value={singleProduct.title} required />
+                                <input type="text" className={Styles.input} name="id" id="" placeholder='Product Id' onChange={event => handleChange(index, event)} value={singleProduct.id} required />
+                                <input type="number" className={Styles.input} name="qty" id="" placeholder='Product quantity' onChange={event => handleChange(index, event)} value={singleProduct.qty} required />
+                                <input type="number" className={Styles.input} name="price" id="" placeholder='Product Price' onChange={event => handleChange(index, event)} value={singleProduct.price} required />
+                                <AiOutlineMinusCircle className={Styles.addIcon} onClick={() => removeInputList()} />
 
-                                
 
-                              
-                                    {cartList.length - 1 === index && <AiOutlinePlusCircle className={Styles.addIcon} onClick={addInputList}/>}
-                               
+
+
+                                {cartList.length - 1 === index && <AiOutlinePlusCircle className={Styles.addIcon} onClick={addInputList} />}
+
 
 
                             </div>
                         )
                     })}
 
-                    <button type='submit' onClick={()=>handleSubmit()}>Save</button> <br />
-                    <button type="button" onClick={getData}>Get Data</button>
+                    <button type='submit' onClick={() => handleSubmit()}>Save</button> <br />
+                    <button type="button" onClick={getStorageData}>Get Data</button>
 
-                    
+
                 </form>
 
             </div>
