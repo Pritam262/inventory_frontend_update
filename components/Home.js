@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Styles from "@/app/styles/home.module.css"
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai"
 import CartItem from './CartItem'
@@ -9,6 +9,7 @@ function Home() {
     const [subTotal, setSubTotal] = useState(0)
 
     const [cartList, setCartList] = useState([{ title: "", id: "", qty: "", price: "" }])
+  const [data, setData] = useState({})
 
     const handleChange = (index, event) => {
         const values = [...cartList];
@@ -32,44 +33,60 @@ setCartList([...cartList,{ title: "", id: "", qty: "", price: "" }])
 
 
 const handleSubmit = () => {
-    let cartCode = Number(Date.now().toString());
-    console.log(cartList.length);
-    console.log(cartList);
+    if (cartList.length === 0) {
+      console.error("Cart is empty");
+      return;
+    }
   
-    let allFieldsValid = true; // Flag to track if all fields are valid
-  
+    let totalPrice = 0;
     for (let i = 0; i < cartList.length; i++) {
       const element = cartList[i];
-    //   console.log("Element", i, element);
   
-      const isFieldValid =
-        element.title.length > 1 &&
-        element.id.length > 1 &&
-        element.qty.length > 1 &&
-        element.price.length > 1;
-  
-      if (!isFieldValid) {
-        allFieldsValid = false;
-        console.error("Fill every field");
-        break; // Exit the loop if any field is invalid
+      if (
+        element.title.length > 0 &&
+        element.id.length > 0 &&
+        element.qty > 0 &&
+        element.price > 0
+      ) {
+        const itemPrice = element.qty * element.price;
+        totalPrice += itemPrice;
+      } else {
+        console.error("Please fill in all fields for item", i + 1);
+        return;
       }
     }
   
-    if (allFieldsValid) {
-      localStorage.setItem(
-        JSON.stringify(cartCode),
-        JSON.stringify({ cartCode, cartList })
-      );
-      console.log({ cartCode, cartList });
-      setCartList([{ title: "", id: "", qty: "", price: "" }]);
-    }
+    const cartCode = Number(Date.now().toString());
+    const cartData = { cartCode, cartList, totalPrice };
+  
+    localStorage.setItem(cartCode.toString(), JSON.stringify(cartData));
+  
+    console.log("Cart data saved to local storage:", cartData);
+  
+    setCartList([{ title: "", id: "", qty: "", price: "" }]);
   };
+  
 
-const getData = (key)=>{
-    let data =JSON.parse(localStorage.getItem(key))
-    console.log("Cart data",data)
 
-}
+
+
+  const getData = () => {
+    const keys = Object.keys(localStorage);
+    const filteredKeys = keys.filter((key) => key.length >= 12 && !isNaN(Number(key)));
+  
+    const data = {};
+  
+    filteredKeys.forEach((key) => {
+      const value = JSON.parse(localStorage.getItem(key));
+      data[key] = value;
+    });
+  
+    console.log("Cart data", data);
+    setData(data);
+  };
+  
+  
+
 
 
 return (
@@ -113,7 +130,7 @@ return (
                     })}
 
                     <button type='submit' onClick={()=>handleSubmit()}>Save</button> <br />
-                    <button type="button" onClick={()=>getData(1688205053723)}>Get Data</button>
+                    <button type="button" onClick={getData}>Get Data</button>
 
                     
                 </form>
