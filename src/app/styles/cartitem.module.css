@@ -1,6 +1,6 @@
 .data{
     width: 100%;
-    background-color: brown;
+    /* background-color: brown; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -8,4 +8,9 @@
 .table{
     width: 100%;
     text-align: center;
+}
+.addIcon{
+    margin: 0 .5rem;
+    font-size: 25px;
+    color: #000;
 }

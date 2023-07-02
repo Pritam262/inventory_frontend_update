@@ -72,7 +72,7 @@ function Home() {
       return { cartCode: value.cartCode, totalPrice: value.totalPrice };
     });
 
-    console.log("Cart data", data);
+    // console.log("Cart data", data);
     setCartItem(data);
   };
 
@@ -85,7 +85,7 @@ function Home() {
    {/* Inside the Home component */}
     <div className={Styles.leftSide}>
       {cartItem.map((item) => (
-        <CartItem key={item.cartCode} cartCode={item.cartCode} totalPrice={item.totalPrice} />
+        <CartItem key={item.cartCode} cartCode={item.cartCode} totalPrice={item.totalPrice} setCartItem={setCartItem}/>
       ))}
     </div>
     
@@ -142,8 +142,8 @@ function Home() {
           <button type="submit" onClick={() => handleSubmit()}>
             Save
           </button> <br />
-          <button type="button" onClick={getStorageData}>
-            Get Data
+          <button type="button">
+            Buy Now
           </button>
         </form>
       </div>
