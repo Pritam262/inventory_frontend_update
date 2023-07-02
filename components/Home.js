@@ -28,35 +28,76 @@ const addInputList = (e)=>{
     e.preventDefault()
 setCartList([...cartList,{ title: "", id: "", qty: "", price: "" }])
 }
-const handleSubmit = ()=>{
+
+
+// const handleSubmit = ()=>{
     
-    let cartCode = Number(Date.now().toString())
-    // setCartList({cartCode,cartList})
-console.log(cartList.length)
-    for (let i = 0; i < cartList.length; i++) {
-        const element = cartList[i];
-       if (element){
+//     let cartCode = Number(Date.now().toString())
+//     // setCartList({cartCode,cartList})
+// console.log(cartList.length)
+// console.log(cartList)
+//     for (let i = 0; i < cartList.length; i++) {
+//         const element = cartList[i];
+//         console.log("Element", i, element)
+//        if (element, i){
             
-            const boll =element.title.length>1 && element.id.length>1 && element.qty.length>1 && element.price.length>1
-            console.log("Element price length",element.price.length)
-            console.log("Value of bool", boll)
-            if(boll===true){
-                localStorage.setItem(JSON.stringify(cartCode), JSON.stringify({cartCode,cartList}))
-                console.log({cartCode, cartList})
-                setCartList([{ title: "", id: "", qty: "", price: "" }])
-            }
-            else{
-                console.error("Fill every fiels")
-            }
-        }
-        else(console.log("Element is not available"))
+//             const boll =element.title.length>1 && element.id.length>1 && element.qty.length>1 && element.price.length>1
+//             // console.log("Element price length",element.price.length)
+//             // console.log("Value of bool", boll)
+//             if(boll=== true && cartList[i]){
+//                 localStorage.setItem(JSON.stringify(cartCode), JSON.stringify({cartCode,cartList}))
+//                 console.log({cartCode, cartList})
+//                 setCartList([{ title: "", id: "", qty: "", price: "" }])
+//             }
+//             else{
+//                 console.error("Fill every fiels")
+//             }
+//         }
+//         else(console.log("Element is not available"))
 
-    }
+//     }
     
-    // localStorage.setItem(JSON.stringify(cartCode), JSON.stringify({cartCode,cartList}))
-    // console.log({cartCode, cartList})
+//     // localStorage.setItem(JSON.stringify(cartCode), JSON.stringify({cartCode,cartList}))
+//     // console.log({cartCode, cartList})
 
-}
+// }
+
+
+
+const handleSubmit = () => {
+    let cartCode = Number(Date.now().toString());
+    console.log(cartList.length);
+    console.log(cartList);
+  
+    let allFieldsValid = true; // Flag to track if all fields are valid
+  
+    for (let i = 0; i < cartList.length; i++) {
+      const element = cartList[i];
+    //   console.log("Element", i, element);
+  
+      const isFieldValid =
+        element.title.length > 1 &&
+        element.id.length > 1 &&
+        element.qty.length > 1 &&
+        element.price.length > 1;
+  
+      if (!isFieldValid) {
+        allFieldsValid = false;
+        console.error("Fill every field");
+        break; // Exit the loop if any field is invalid
+      }
+    }
+  
+    if (allFieldsValid) {
+      localStorage.setItem(
+        JSON.stringify(cartCode),
+        JSON.stringify({ cartCode, cartList })
+      );
+      console.log({ cartCode, cartList });
+      setCartList([{ title: "", id: "", qty: "", price: "" }]);
+    }
+  };
+
 const getData = (key)=>{
     let data =JSON.parse(localStorage.getItem(key))
     console.log("Cart data",data)
