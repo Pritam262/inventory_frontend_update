@@ -1,15 +1,22 @@
 import React from 'react'
-
-function CartItem(item, keyValue) {
-    
-  return (
-    <div>
-    <p>{keyValue}</p> <br />
-    <p>{item.price}</p> <br />
+import Styles from "@/app/styles/cartitem.module.css"
+// CartItem component
+function CartItem({ cartCode, totalPrice }) {
+  return (<div className={Styles.data}>
+    <table className={Styles.table}>
+    <tr>
+      <th>Id</th>
+      <th>Price</th>
+    </tr>
+    <tr>
+      <td>{cartCode}</td>
+      <td>{totalPrice}</td>
+      </tr>
+      </table>
+      
+      </div>
    
-    
-    </div>
-  )
+    );
 }
 
 export default CartItem

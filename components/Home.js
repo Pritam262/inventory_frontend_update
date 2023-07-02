@@ -82,11 +82,13 @@ function Home() {
 
   return (
     <div className={Styles.container}>
-      <div className={Styles.leftSide}>
-        {cartItem.map((item) => (
-          <CartItem key={item.cartCode} cartCode={item.cartCode} totalPrice={item.totalPrice} />
-        ))}
-      </div>
+   {/* Inside the Home component */}
+    <div className={Styles.leftSide}>
+      {cartItem.map((item) => (
+        <CartItem key={item.cartCode} cartCode={item.cartCode} totalPrice={item.totalPrice} />
+      ))}
+    </div>
+    
       <div className={Styles.rightSide}>
         <form autoComplete="off" className={Styles.addCart}>
           <h4 className={Styles.heading}>Buy Product</h4>
