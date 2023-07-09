@@ -1,9 +1,9 @@
 "use client"
-import React from 'react';
+import React, { useEffect } from 'react';
 import Styles from "@/app/styles/cartitem.module.css"
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 
-function CartItem({ cartCode, totalPrice,setCartItem }) {
+function CartItem({ cartCode, totalPrice,setCartList, getStorageData }) {
 
 {/* on editData btn click get the id and get the data from localStorage then it show on home page  using cartItem react state addHookAliases. */}
 
@@ -21,10 +21,20 @@ function CartItem({ cartCode, totalPrice,setCartItem }) {
         console.log(cartData)
         // Set the cartItem state in the Home component using setCartItem
 
-        // setCartItem(cartList);
+        setCartList(cartData.cartList);
+        deleteData(id)
       }
     }
   };
+
+  const deleteData = (id)=>{
+    localStorage.removeItem(id)
+    getStorageData()
+  }
+useEffect(() => {
+  getStorageData()
+}, [])
+
 
   return (
     <div className={Styles.data}>
@@ -35,6 +45,9 @@ function CartItem({ cartCode, totalPrice,setCartItem }) {
             <th>Total Price</th>
             <th>
               <AiOutlinePlusCircle className={Styles.addIcon} onClick={() => editData(cartCode)} /> {/* Pass the cartCode as the argument */}
+            </th>
+            <th>
+              <AiOutlineMinusCircle className={Styles.addIcon}  onClick={()=>deleteData(cartCode)}/> {/* Pass the cartCode as the argument */}
             </th>
           </tr>
         </thead>

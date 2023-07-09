@@ -1,37 +1,60 @@
-.container{
+.container {
     width: 100vw;
     height: 90vh;
     display: flex;
     color: blueviolet;
 }
-.leftSide{
+
+.leftSide {
     width: 20vw;
     height: auto;
     background-color: azure;
 }
-.rightSide{
+
+.rightSide {
     width: 100%;
     background-color: aqua;
     display: flex;
     justify-content: center;
 }
-.heading{
+
+.heading {
     text-align: center;
     padding: .5rem;
     font-size: 25px;
 }
-.productDetails{
+
+.productDetails {
+    width: 80vw;
     margin: .5rem 0;
     display: flex;
     align-items: center;
+ 
+    /* background-color: blue; */
 }
-.input{
-    padding: .5rem;
+
+.input {
+    width: 20%;
+    padding: .8rem;
     color: #fff;
     font-size: 15px;
 }
-.addIcon{
+
+.icon {
     margin: 0 .5rem;
     font-size: 25px;
     color: #000;
+}
+.buttonOption{
+    width: 10vw;
+    display: flex;
+    justify-content:space-between;
+    margin-top: 2em;
+
+}
+.button{
+    padding: .5rem;
+    font-size: 15px;
+    color: #fff;
+    cursor: pointer;
 }

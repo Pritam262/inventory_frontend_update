@@ -3,32 +3,87 @@ import React, { useEffect, useState } from 'react';
 import Styles from "@/app/styles/home.module.css";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 import CartItem from './CartItem';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function Home() {
+
+  // Declare the default variable with its value
   const [subTotal, setSubTotal] = useState(0);
   const [cartList, setCartList] = useState([{ title: "", id: "", qty: "", price: "" }]);
   const [cartItem, setCartItem] = useState([]);
+
+  // This function will update the cartList onChane
 
   const handleChange = (index, event) => {
     const values = [...cartList];
     values[index][event.target.name] = event.target.value;
     setCartList(values);
+
   };
+
+
+  // This function revove the current cartList using the onClick index value
 
   const removeInputList = (index) => {
     const values = [...cartList];
     values.splice(index, 1);
     setCartList(values);
+    updateTotalPrice(values)
+
+    toast.success(`Remove ${index +1} no. cartList !`, {
+      position: toast.POSITION.TOP_CENTER
+  });
+
+
   };
+
+  // This function add the CartList
 
   const addInputList = (e) => {
     e.preventDefault();
     setCartList([...cartList, { title: "", id: "", qty: "", price: "" }]);
   };
 
+  // This function will be update the SubTotal value
+
+  const updateTotalPrice = (cartList) => {
+    let total = 0;
+    for (let i = 0; i < cartList.length; i++) {
+      const element = cartList[i];
+      if (element.qty > 0 && element.price > 0) {
+        const itemPrice = element.qty * element.price;
+        total += itemPrice;
+      }
+    }
+    setSubTotal(total);
+  };
+
+  // This function will update the SubTotal value using the updateTotalPrice function which is call every cartList update time
+  useEffect(() => {
+    updateTotalPrice(cartList)
+
+
+  }, [cartList])
+
+
+
+
+  // This function work for Save the cartList in localStorage with curtCode which is currentTime
+
   const handleSubmit = () => {
     if (cartList.length === 0) {
       console.error("Cart is empty");
+
+      // Call your server-side API to generate a Paytm transaction token
+      // This can be done using a fetch or axios request
+
+      // Redirect the user to the Paytm payment gateway page
+      // You can submit a form or redirect the user to the Paytm gateway URL
+
+      // After the payment is completed and Paytm sends a response to your server,
+      // handle the payment response and update the UI accordingly
+
+
       return;
     }
 
@@ -61,7 +116,15 @@ function Home() {
 
     // Update cartItem state with the new cartCode and totalPrice
     setCartItem([...cartItem, { cartCode, totalPrice }]);
+
+    toast.success(`Product add in your localStorage !`, {
+      position: toast.POSITION.TOP_CENTER
+  });
   };
+
+
+  // Get all the storage data which key length >= 12 and set the cartItem
+
 
   const getStorageData = () => {
     const keys = Object.keys(localStorage);
@@ -76,22 +139,36 @@ function Home() {
     setCartItem(data);
   };
 
+
+
+  // GetStorageData on every time
+
   useEffect(() => {
     getStorageData();
   }, []);
 
+
+  // This function use for payment
+
+  const handlePayNow = () => {
+    console.log("Total Price:", subTotal);
+  };
+
   return (
     <div className={Styles.container}>
-   {/* Inside the Home component */}
-    <div className={Styles.leftSide}>
-      {cartItem.map((item) => (
-        <CartItem key={item.cartCode} cartCode={item.cartCode} totalPrice={item.totalPrice} setCartItem={setCartItem}/>
-      ))}
-    </div>
-    
+
+      <div className={Styles.leftSide}>
+        {/* Show the cart Item in the left site */}
+        {cartItem.map((item) => (
+          <CartItem key={item.cartCode} cartCode={item.cartCode} totalPrice={item.totalPrice} setCartList={setCartList} getStorageData={getStorageData}/>
+        ))}
+      </div>
+
       <div className={Styles.rightSide}>
         <form autoComplete="off" className={Styles.addCart}>
           <h4 className={Styles.heading}>Buy Product</h4>
+
+          {/* Show the add cartList input field */}
 
           {cartList.map((singleProduct, index) => {
             return (
@@ -132,21 +209,29 @@ function Home() {
                   value={singleProduct.price}
                   required
                 />
-                <AiOutlineMinusCircle className={Styles.addIcon} onClick={() => removeInputList()} />
 
-                {cartList.length - 1 === index && <AiOutlinePlusCircle className={Styles.addIcon} onClick={addInputList} />}
+                {cartList.length > 1 && (
+                  <AiOutlineMinusCircle className={Styles.icon} onClick={() => removeInputList(index)} />
+                )}
+
+
+
+                {cartList.length - 1 === index && <AiOutlinePlusCircle className={Styles.icon} onClick={addInputList} />}
               </div>
             );
           })}
 
-          <button type="submit" onClick={() => handleSubmit()}>
-            Save
-          </button> <br />
-          <button type="button">
-            Buy Now
-          </button>
+          <div className={Styles.buttonOption}>
+            <button type="submit" className={Styles.button} onClick={() => handleSubmit()}>
+              Save
+            </button> <br />
+            <button type="button" className={Styles.button} onClick={handlePayNow} disabled={subTotal === 0}>
+              {subTotal > 0 ? `Pay Now: ${subTotal}` : "Pay Now"}
+            </button>
+          </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }
