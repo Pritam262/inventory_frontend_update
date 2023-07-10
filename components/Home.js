@@ -6,11 +6,15 @@ import CartItem from './CartItem';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function Home() {
-
+  const host = "http://localhost:3000"
   // Declare the default variable with its value
   const [subTotal, setSubTotal] = useState(0);
   const [cartList, setCartList] = useState([{ title: "", id: "", qty: "", price: "" }]);
   const [cartItem, setCartItem] = useState([]);
+
+  const [orderId, setOrderId] = useState('');
+  const [paymentId, setPaymentId] = useState('');
+  const [signature, setSignature] = useState('');
 
   // This function will update the cartList onChane
 
@@ -71,21 +75,7 @@ function Home() {
   // This function work for Save the cartList in localStorage with curtCode which is currentTime
 
   const handleSubmit = () => {
-    if (cartList.length === 0) {
-      console.error("Cart is empty");
 
-      // Call your server-side API to generate a Paytm transaction token
-      // This can be done using a fetch or axios request
-
-      // Redirect the user to the Paytm payment gateway page
-      // You can submit a form or redirect the user to the Paytm gateway URL
-
-      // After the payment is completed and Paytm sends a response to your server,
-      // handle the payment response and update the UI accordingly
-
-
-      return;
-    }
 
     let totalPrice = 0;
     for (let i = 0; i < cartList.length; i++) {
@@ -150,7 +140,75 @@ function Home() {
 
   // This function use for payment
 
-  const handlePayNow = () => {
+  const handlePayNow = async () => {
+    try {
+      const response = await fetch(`${host}/api/payment/create-order`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          amount: subTotal*100, // Set the payment amount
+          currency: 'INR',
+          receipt: String(Date.now().toString()) // Set the unique receipt ID
+        })
+      });
+      console.log(JSON.stringify({
+        amount: subTotal*100, // Set the payment amount
+        currency: 'INR',
+        receipt: String(Date.now().toString()) // Set the unique receipt ID
+      }))
+      
+      const data = await response.json();
+
+      setOrderId(data.id);
+
+      const options = {
+        key: process.env.RAZORPAY_API_KEY,
+        amount: subTotal*100,
+        currency: 'INR',
+        name: 'My Store',
+        description: 'Test Payment',
+        order_id: orderId,
+        handler: async (response) => {
+          try {
+            setPaymentId(response.razorpay_payment_id);
+            setSignature(response.razorpay_signature);
+
+            // Verify the payment
+            const verifyResponse = await fetch(`${host}/api/payment/verify-payment`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                orderId: response.razorpay_order_id,
+                paymentId: response.razorpay_payment_id,
+                signature: response.razorpay_signature,
+                productItem:cartList.product
+              })
+            });
+
+            const verifyData = await verifyResponse.json();
+
+            if (verifyData.success) {
+              // Payment is successful, handle the success flow
+              console.log('Payment success');
+            } else {
+              // Payment verification failed, handle the failure flow
+              console.log('Payment verification failed');
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.log(error);
+    }
     console.log("Total Price:", subTotal);
   };
 
