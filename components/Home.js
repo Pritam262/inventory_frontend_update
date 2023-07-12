@@ -1,16 +1,21 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Styles from "@/app/styles/home.module.css";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 import CartItem from './CartItem';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Link from 'next/link';
+import ProductContext from '@/app/context/ProductContext';
 function Home() {
   const host = "http://localhost:3000"
+  const context = useContext(ProductContext)
+  const {subTotal,setSubTotal,cartList,setCartList,cartItem,setCartItem} = context
   // Declare the default variable with its value
-  const [subTotal, setSubTotal] = useState(0);
-  const [cartList, setCartList] = useState([{ title: "", id: "", qty: "", price: "" }]);
-  const [cartItem, setCartItem] = useState([]);
+
+  // const [subTotal, setSubTotal] = useState(0);
+  // const [cartList, setCartList] = useState([{ title: "", id: "", qty: "", price: "" }]);
+  // const [cartItem, setCartItem] = useState([]);
 
   const [orderId, setOrderId] = useState('');
   const [paymentId, setPaymentId] = useState('');
@@ -141,7 +146,27 @@ function Home() {
   // This function use for payment
 
   const handlePayNow = async () => {
-    try {
+    for (let i = 0; i < cartList.length; i++) {
+      const element = cartList[i];
+
+      if (
+        element.title.length > 0 &&
+        element.id.length > 0 &&
+        element.qty > 0 &&
+        element.price > 0
+      ) {
+        
+    console.log("This is on home page",cartList,subTotal)
+    setCartList(cartList,subTotal)
+    // console.log("Cart List", cartList)
+      } else {
+        console.error("Please fill in all fields for item", i + 1);
+        return;
+      }
+    }
+
+
+    /* try {
       const response = await fetch(`${host}/api/payment/create-order`, {
         method: 'POST',
         headers: {
@@ -209,7 +234,7 @@ function Home() {
     } catch (error) {
       console.log(error);
     }
-    console.log("Total Price:", subTotal);
+    console.log("Total Price:", subTotal); */
   };
 
   return (
@@ -283,9 +308,12 @@ function Home() {
             <button type="submit" className={Styles.button} onClick={() => handleSubmit()}>
               Save
             </button> <br />
+            <Link href={'/chackout'}>
+
             <button type="button" className={Styles.button} onClick={handlePayNow} disabled={subTotal === 0}>
               {subTotal > 0 ? `Pay Now: ${subTotal}` : "Pay Now"}
             </button>
+            </Link>
           </div>
         </form>
       </div>

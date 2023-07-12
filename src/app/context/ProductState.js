@@ -7,6 +7,10 @@ const ProductState = ({ children }) => {
   // const productInitial = []
   const [products, setproducts] = useState([])
 
+  const [subTotal, setSubTotal] = useState(0);
+  const [cartList, setCartList] = useState([{ title: "", id: "", qty: "", price: "" }]);
+  const [cartItem, setCartItem] = useState([]);
+
   // console.log(products)
 
 
@@ -91,7 +95,7 @@ const ProductState = ({ children }) => {
   }
 
   return (
-    <ProductContext.Provider value={{ products, getProducts, addProduct, deleteProduct, editProduct }}>
+    <ProductContext.Provider value={{ products, getProducts, addProduct, deleteProduct, editProduct,setSubTotal, subTotal , setCartList, cartList,setCartItem,cartItem }}>
       {children}
     </ProductContext.Provider>
   )
