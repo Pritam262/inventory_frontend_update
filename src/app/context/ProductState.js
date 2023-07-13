@@ -94,8 +94,26 @@ const ProductState = ({ children }) => {
     setproducts(newproducts);
   }
 
+    // Add a sells product
+    const addSellsProduct = async (cartList,subTotal,returnAmount) => {
+      // TODO: API Call
+      // API Call 
+      const response = await fetch(`${host}/api/sells/addproduct`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ1OTM5ZTcwODA1ODNkMTY4ZTA0NGVkIn0sImlhdCI6MTY4MzU2OTEyN30.smEdVJQ2Fc2fL5SxrTYofEOcLy4OtoEaCQPn3ifCCzg'
+        },
+        body: JSON.stringify([{"productlist":cartList},{'totalprice':subTotal}, {'amount':cashAmount},{"returnAmount":returnAmount}])
+        
+      });
+  
+      const product = await response.json();
+      setproducts(products.concat(product))
+    }
+
   return (
-    <ProductContext.Provider value={{ products, getProducts, addProduct, deleteProduct, editProduct,setSubTotal, subTotal , setCartList, cartList,setCartItem,cartItem }}>
+    <ProductContext.Provider value={{ products, getProducts, addProduct, deleteProduct, editProduct,setSubTotal, subTotal , setCartList, cartList,setCartItem,cartItem,addSellsProduct }}>
       {children}
     </ProductContext.Provider>
   )
