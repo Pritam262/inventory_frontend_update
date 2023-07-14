@@ -28,7 +28,7 @@ const ProductState = ({ children }) => {
     setproducts(data)
   }
 
-// console.log("Type of getProducts in productState is: ", typeof getProducts)
+  // console.log("Type of getProducts in productState is: ", typeof getProducts)
 
   // getproducts();
   // Add a Note
@@ -41,8 +41,8 @@ const ProductState = ({ children }) => {
         'Content-Type': 'application/json',
         'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ1OTM5ZTcwODA1ODNkMTY4ZTA0NGVkIn0sImlhdCI6MTY4MzU2OTEyN30.smEdVJQ2Fc2fL5SxrTYofEOcLy4OtoEaCQPn3ifCCzg'
       },
-      body: JSON.stringify([{title, id, qty, unit, price }])
-      
+      body: JSON.stringify([{ title, id, qty, unit, price }])
+
     });
 
     const product = await response.json();
@@ -74,7 +74,7 @@ const ProductState = ({ children }) => {
         'Content-Type': 'application/json',
         'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ1OTM5ZTcwODA1ODNkMTY4ZTA0NGVkIn0sImlhdCI6MTY4MzU2OTEyN30.smEdVJQ2Fc2fL5SxrTYofEOcLy4OtoEaCQPn3ifCCzg'
       },
-      body: JSON.stringify([{title, id, qty, unit, price }])
+      body: JSON.stringify([{ title, id, qty, unit, price }])
     });
     // eslint-disable-next-line
     const json = await response.json();
@@ -94,26 +94,57 @@ const ProductState = ({ children }) => {
     setproducts(newproducts);
   }
 
-    // Add a sells product
-    const addSellsProduct = async (cartList,subTotal,returnAmount) => {
-      // TODO: API Call
-      // API Call 
+  // // Add a sells product
+  // const addSellsProduct = async (cartList,cashAmount,subTotal,returnAmount) => {
+  //   // TODO: API Call
+  //   // API Call 
+  //   const response = await fetch(`${host}/api/sells/addproduct`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ1OTM5ZTcwODA1ODNkMTY4ZTA0NGVkIn0sImlhdCI6MTY4MzU2OTEyN30.smEdVJQ2Fc2fL5SxrTYofEOcLy4OtoEaCQPn3ifCCzg'
+  //     },
+  //     body: JSON.stringify([{"productitem":cartList},{'totalprice':subTotal}, {'amount':cashAmount},{"returnamount":returnAmount}])
+
+
+  //   });
+
+  //   const product = await response.json();
+  //   setproducts(products.concat(product))
+  // }
+
+  const addSellsProduct = async (cartList, cashAmount, subTotal, returnAmount,selectedPayment,orderId) => {
+    try {
       const response = await fetch(`${host}/api/sells/addproduct`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ1OTM5ZTcwODA1ODNkMTY4ZTA0NGVkIn0sImlhdCI6MTY4MzU2OTEyN30.smEdVJQ2Fc2fL5SxrTYofEOcLy4OtoEaCQPn3ifCCzg'
         },
-        body: JSON.stringify([{"productlist":cartList},{'totalprice':subTotal}, {'amount':cashAmount},{"returnAmount":returnAmount}])
-        
+        body: JSON.stringify({
+          product: cartList,
+          paymenttype:selectedPayment,
+          totalprice:subTotal,
+          cashamount:Number(cashAmount),
+          returnamount:returnAmount,
+          orderid:orderId
+        }),
       });
-  
-      const product = await response.json();
-      setproducts(products.concat(product))
+      
+      if (!response.ok) {
+        throw new Error('Failed to add sells product');
+      }
+
+      const data = await response.json();
+      // console.log('Sells product added:', data);
+    } catch (error) {
+      throw new Error(error.message);
     }
+  };
+
 
   return (
-    <ProductContext.Provider value={{ products, getProducts, addProduct, deleteProduct, editProduct,setSubTotal, subTotal , setCartList, cartList,setCartItem,cartItem,addSellsProduct }}>
+    <ProductContext.Provider value={{ products, getProducts, addProduct, deleteProduct, editProduct, setSubTotal, subTotal, setCartList, cartList, setCartItem, cartItem, addSellsProduct }}>
       {children}
     </ProductContext.Provider>
   )
