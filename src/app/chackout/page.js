@@ -4,7 +4,7 @@ import ProductContext from '@/app/context/ProductContext';
 
 function Page() {
   const context = useContext(ProductContext);
-  const { cartList, subTotal } = context;
+  const { cartList, subTotal, addSellsProduct } = context;
   const [selectedPayment, setSelectedPayment] = useState('');
   const [cashAmount, setCashAmount] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -13,25 +13,47 @@ function Page() {
     setSelectedPayment(event.target.value);
   };
 
-  const handlePayNow = () => {
+
+    const handlePayNow = async () => {
     if (selectedPayment === 'cash') {
-      if (cashAmount === subTotal) {
-        // Save cartList and subTotal to MongoDB database
-        console.log('Saving to MongoDB:', cartList, subTotal);
-      } else if (p > subTotal) {
+      let orderId = (Number(Date.now()*100).toString())
+      if (cashAmount > subTotal) {
+
         // Calculate the return amount
         const returnAmount = cashAmount - subTotal;
-  
-        // Save cartList, subTotal, and returnAmount to MongoDB database
-        console.log('Saving to MongoDB:', cartList, subTotal, returnAmount);
-      } else {
-        setErrorMessage('Cash amount should be equal to or greater than the subTotal.');
+
+        // console.log(orderId)
+
+        try {
+          // Save cartList, subTotal, and returnAmount to MongoDB database
+
+          await addSellsProduct(cartList, cashAmount, subTotal, returnAmount, selectedPayment, orderId);
+
+          // console.log('Saving to MongoDB:', cartList, subTotal, returnAmount);
+        } catch (error) {
+          console.error('Failed to save sells product:', error);
+        }
+      }
+       else if (cashAmount === subTotal) {
+
+        const returnAmount = cashAmount - subTotal;
+
+        try {
+          // Save cartList, subTotal, and returnAmount to MongoDB database
+          await addSellsProduct(cartList, cashAmount, subTotal, returnAmount, selectedPayment, orderId);
+          // console.log('Saving to MongoDB:', cartList, subTotal,cashAmount);
+        } catch (error) {
+          console.error('Failed to save sells product:', error);
+        }
       }
     } else if (selectedPayment === 'online') {
       // Redirect to Razorpay payment gateway
       console.log('Redirecting to Razorpay payment gateway...');
     }
   };
+
+
+
 
   return (
     <div>
@@ -63,7 +85,7 @@ function Page() {
               type="number"
               name="cashAmount"
               value={cashAmount}
-              onChange={(event) => setCashAmount(event.target.value)}
+              onChange={(event) => setCashAmount(Number(event.target.value))}
               placeholder="Enter cash amount"
             />
             {cashAmount < subTotal && <p style={{ color: 'red' }}>Cash amount should be equal to or greater than the subTotal.</p>}

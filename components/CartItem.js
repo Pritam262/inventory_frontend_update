@@ -9,7 +9,9 @@ function CartItem({ cartCode, totalPrice,setCartList, getStorageData }) {
 
   const editData = (id) => {
     if (id) {
-      console.log(id)
+
+      // console.log(id)
+
       // Retrieve the data from localStorage using the cartCode
       const cartData = JSON.parse(localStorage.getItem(id.toString()));
       
@@ -18,7 +20,8 @@ function CartItem({ cartCode, totalPrice,setCartList, getStorageData }) {
         // Extract the cartList from the cartData
         const { cartList } = cartData;
         
-        console.log(cartData)
+        // console.log(cartData)
+
         // Set the cartItem state in the Home component using setCartItem
 
         setCartList(cartData.cartList);

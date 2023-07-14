@@ -104,14 +104,10 @@ function Home() {
     const cartData = { cartCode, cartList, totalPrice };
 
     localStorage.setItem(cartCode.toString(), JSON.stringify(cartData));
-
-    console.log("Cart data saved to local storage:", cartData);
-
     setCartList([{ title: "", id: "", qty: "", price: "" }]);
 
     // Update cartItem state with the new cartCode and totalPrice
     setCartItem([...cartItem, { cartCode, totalPrice }]);
-
     toast.success(`Product add in your localStorage !`, {
       position: toast.POSITION.TOP_CENTER
   });
@@ -156,7 +152,6 @@ function Home() {
         element.price > 0
       ) {
         
-    console.log("This is on home page",cartList,subTotal)
     setCartList(cartList,subTotal)
     // console.log("Cart List", cartList)
       } else {
@@ -165,76 +160,6 @@ function Home() {
       }
     }
 
-
-    /* try {
-      const response = await fetch(`${host}/api/payment/create-order`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          amount: subTotal*100, // Set the payment amount
-          currency: 'INR',
-          receipt: String(Date.now().toString()) // Set the unique receipt ID
-        })
-      });
-      console.log(JSON.stringify({
-        amount: subTotal*100, // Set the payment amount
-        currency: 'INR',
-        receipt: String(Date.now().toString()) // Set the unique receipt ID
-      }))
-      
-      const data = await response.json();
-
-      setOrderId(data.id);
-
-      const options = {
-        key: process.env.RAZORPAY_API_KEY,
-        amount: subTotal*100,
-        currency: 'INR',
-        name: 'My Store',
-        description: 'Test Payment',
-        order_id: orderId,
-        handler: async (response) => {
-          try {
-            setPaymentId(response.razorpay_payment_id);
-            setSignature(response.razorpay_signature);
-
-            // Verify the payment
-            const verifyResponse = await fetch(`${host}/api/payment/verify-payment`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                orderId: response.razorpay_order_id,
-                paymentId: response.razorpay_payment_id,
-                signature: response.razorpay_signature,
-                productItem:cartList.product
-              })
-            });
-
-            const verifyData = await verifyResponse.json();
-
-            if (verifyData.success) {
-              // Payment is successful, handle the success flow
-              console.log('Payment success');
-            } else {
-              // Payment verification failed, handle the failure flow
-              console.log('Payment verification failed');
-            }
-          } catch (error) {
-            console.log(error);
-          }
-        }
-      };
-
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
-    } catch (error) {
-      console.log(error);
-    }
-    console.log("Total Price:", subTotal); */
   };
 
   return (
