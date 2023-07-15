@@ -10,22 +10,41 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 .main {
-    width: 100vw;
-    min-height: 100vh;
+    /* width: 85vw; */
+    /* min-height: 100vh; */
     /* background-color: blueviolet; */
+    background-color: rgb(65, 63, 63);
+    display: flex;
+    
     
 
 }
 
 .dash_navbar {
-    width: 100vw;
-    height: 5vh;
-    background-color: rgb(209, 135, 44);
-    position: absolute;
+    /* width: 100vw;
+    height: 5vh; */
+    width: 15vw;
+    height: 90vh;
+    /* background-color: rgb(209, 135, 44); */
+    background-color:rgb(51, 51, 50) ;
+    /* position: absolute; */
 
     font-size: 20px;
     font-family: 'Dancing Script', cursive;
+    /* border-right: 1px solid red; */
+  position: relative;
     
+}
+.dash_navbar::after{
+    content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1px; /* Adjust the width as per your preference */
+  background: linear-gradient(to bottom, #ff0000 0%, #00ff00 50%, #0000ff 100%);
+  /* Replace the color codes and percentages with your desired values */
+
 }
 
 .li {
@@ -39,137 +58,7 @@
 .block{
     display: block;
 }
-.container {
-    width: 400px;
-    height: 350px;
-    /* color: #000; */
-    /* background-color: azure; */
-    position: relative;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, 20%);
-    padding: 0 .5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
 
-    --border-size: 2px;
-    --border-angle: 0turn;
-    width: 60vmin;
-    height: 50vmin;
-
-    font-family: 'Dancing Script', cursive;
-    background-image: conic-gradient(from var(--border-angle),
-            #213,
-            #112 50%,
-            #213),
-        conic-gradient(from var(--border-angle), 
-        transparent 10%, #08f, #f03);
-    background-size: calc(100% - (var(--border-size) * 2)) calc(100% - (var(--border-size) * 2)),
-        cover;
-
-    background-position: center center;
-    background-repeat: no-repeat;
-
-    animation: bg-spin 5s linear infinite;
-}
-
-@keyframes bg-spin {
-    to {
-        --border-angle: 1turn;
-    }
-}
-
-
-@property --border-angle {
-    syntax: "<angle>";
-    inherits: true;
-    initial-value: 0turn;
-}
-.box_container{
-    width: 102%;
-    height: 98%;
-    margin: .1rem 0;
-        background-color: black;
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-
-        
-    }
-.input_Container {
-    /* background-color: blueviolet; */
-    width: 100%;
-    height: 55%;
-    padding: .5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
-
-
-
-    
-}
-
-@property --angle {
-    syntax: '<angle>';
-    initial-value: 90deg;
-    inherits: true;
-  }
-  
-  @property --gradX {
-    syntax: '<percentage>';
-    initial-value: 50%;
-    inherits: true;
-  }
-  
-  @property --gradY {
-    syntax: '<percentage>';
-    initial-value: 0%;
-    inherits: true;
-  }
-.input {
-    font-size: 15px;
-    padding: .8rem;
-    margin: .2rem 0;
-    background-color: transparent;
-    /* border: none; */
-
-    
-    border: 1px solid transparent;
-    background-image: linear-gradient(#000, #000),
-      linear-gradient(120deg, #f09 0%, #0ff 50%, #9f0 100%);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    border-radius: .2em;
-    background-size: 200% 100%;
-
-   
-
-    
-}
-
-
-
-.btn {
-    padding: 1rem;
-    font-size: 20px;
-    background-color: transparent;
-    /* color: #000; */
-
-
-    border: 1px solid transparent;
-    background-image: linear-gradient(#000, #000),
-      linear-gradient(120deg, #f09 0%, #0ff 50%, #9f0 100%);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    border-radius: .2em;
-    background-size: 200% 100%;
-
-
-    font-family: 'Dancing Script', cursive;
+.active{
+    font-weight: bold;
 }

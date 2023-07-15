@@ -12,5 +12,6 @@
 .addIcon{
     margin: 0 .5rem;
     font-size: 25px;
-    color: #000;
+    /* color: #000; */
+    color: #fff;
 }

@@ -1,6 +1,7 @@
 "use client"
 import React, { useContext, useState } from 'react';
 import ProductContext from '@/app/context/ProductContext';
+import Styles from "@/app/styles/chackout.module.css"
 
 function Page() {
   const context = useContext(ProductContext);
@@ -14,9 +15,9 @@ function Page() {
   };
 
 
-    const handlePayNow = async () => {
+  const handlePayNow = async () => {
     if (selectedPayment === 'cash') {
-      let orderId = (Number(Date.now()*100).toString())
+      let orderId = (Number(Date.now() * 100).toString())
       if (cashAmount > subTotal) {
 
         // Calculate the return amount
@@ -34,7 +35,7 @@ function Page() {
           console.error('Failed to save sells product:', error);
         }
       }
-       else if (cashAmount === subTotal) {
+      else if (cashAmount === subTotal) {
 
         const returnAmount = cashAmount - subTotal;
 
@@ -56,28 +57,40 @@ function Page() {
 
 
   return (
-    <div>
-      <div>
-        <h4>Your pay amount is: {subTotal}</h4>
-        <input
-          type="radio"
-          id="contactChoice1"
-          name="paymentMode"
-          value="cash"
-          checked={selectedPayment === 'cash'}
-          onChange={handlePaymentModeChange}
-        />
-        <label htmlFor="contactChoice1">Cash</label>
+    <div className={Styles.main}>
+      <div className={Styles.container}>
+        <h4 className={Styles.title}><strong>Your pay amount is:</strong> {subTotal}</h4>
 
-        <input
-          type="radio"
-          id="contactChoice2"
-          name="paymentMode"
-          value="online"
-          checked={selectedPayment === 'online'}
-          onChange={handlePaymentModeChange}
-        />
-        <label htmlFor="contactChoice2">Online</label>
+        <div className={Styles.paymentOption}>
+          <span className={Styles.inputType}>
+
+            <input
+              type="radio"
+              id="contactChoice1"
+              name="paymentMode"
+              value="cash"
+              checked={selectedPayment === 'cash'}
+              onChange={handlePaymentModeChange}
+            />
+            <label htmlFor="contactChoice1">Cash</label>
+
+          </span>
+          <span className={Styles.inputType}>
+
+
+
+            <input
+              type="radio"
+              id="contactChoice2"
+              name="paymentMode"
+              value="online"
+              checked={selectedPayment === 'online'}
+              onChange={handlePaymentModeChange}
+            />
+            <label htmlFor="contactChoice2">Online</label>
+          </span>
+
+        </div>
 
         {selectedPayment === 'cash' && (
           <>
@@ -85,15 +98,16 @@ function Page() {
               type="number"
               name="cashAmount"
               value={cashAmount}
-              onChange={(event) => setCashAmount(Number(event.target.value))}
+              onChange={(event) => setCashAmount(event.target.value)}
               placeholder="Enter cash amount"
+              className={Styles.inputPayamount}
             />
             {cashAmount < subTotal && <p style={{ color: 'red' }}>Cash amount should be equal to or greater than the subTotal.</p>}
           </>
         )}
-      </div>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-      <button onClick={handlePayNow}>Pay Now</button>
+      <button onClick={handlePayNow} className={Styles.payNowBtn}>Pay Now</button>
+      </div>
     </div>
   );
 }

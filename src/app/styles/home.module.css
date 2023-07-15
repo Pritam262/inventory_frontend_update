@@ -2,18 +2,34 @@
     width: 100vw;
     height: 90vh;
     display: flex;
-    color: blueviolet;
+    /* color: blueviolet; */
+    color: #fff;
 }
 
 .leftSide {
     width: 20vw;
     height: auto;
-    background-color: azure;
+    /* background-color: azure; */
+    background-color: #302f2f;
+    position: relative;
+
+}
+.leftSide:after{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 1px; /* Adjust the width as per your preference */
+    background: linear-gradient(to bottom, #ff0000 0%, #00ff00 50%, #0000ff 100%);
+    /* Replace the color codes and percentages with your desired values */
 }
 
 .rightSide {
     width: 100%;
-    background-color: aqua;
+    /* background-color: aqua; */
+    background-color: #424242;
+
     display: flex;
     justify-content: center;
 }
@@ -37,13 +53,16 @@
     width: 20%;
     padding: .8rem;
     color: #fff;
-    font-size: 15px;
+    font-size: 18px;
+    background-color: #302f2f;
 }
 
 .icon {
     margin: 0 .5rem;
     font-size: 25px;
-    color: #000;
+    /* color: #000; */
+    color: #fff;
+
 }
 .buttonOption{
     width: 10vw;

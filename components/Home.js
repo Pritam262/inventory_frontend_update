@@ -161,6 +161,7 @@ function Home() {
     }
 
   };
+  
 
   return (
     <div className={Styles.container}>
@@ -168,7 +169,7 @@ function Home() {
       <div className={Styles.leftSide}>
         {/* Show the cart Item in the left site */}
         {cartItem.map((item) => (
-          <CartItem key={item.cartCode} cartCode={item.cartCode} totalPrice={item.totalPrice} setCartList={setCartList} getStorageData={getStorageData}/>
+          <CartItem  key={item.cartCode} cartCode={item.cartCode} totalPrice={item.totalPrice} setCartList={setCartList} getStorageData={getStorageData}/>
         ))}
       </div>
 
