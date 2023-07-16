@@ -1,8 +1,10 @@
 "use client"
 import ProductContext from "./ProductContext";
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 
 const ProductState = ({ children }) => {
+  const router = useRouter();
   const host = "http://localhost:3000"
   // const productInitial = []
   const [products, setproducts] = useState([])
@@ -10,9 +12,45 @@ const ProductState = ({ children }) => {
   const [subTotal, setSubTotal] = useState(0);
   const [cartList, setCartList] = useState([{ title: "", id: "", qty: "", price: "" }]);
   const [cartItem, setCartItem] = useState([]);
+  const [authToken, setAuthToken] = useState('');
 
   // console.log(products)
 
+  // User Login
+  const logIn = async (email, password)=>{
+    const response = await fetch(`${host}/api/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({email, password})
+    });
+    const authtoken = await response.json()
+
+    localStorage.setItem("auth-token",authtoken.authtoken)
+    
+    router.push('/');
+    
+
+  }
+
+
+  // User sign up
+
+  const signUp = async (name, email, password, address  )=>{
+    const response = await fetch(`${host}/api/auth/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({name, email, password, address  })
+    });
+    const authtoken = await response.json()
+    localStorage.setItem("auth-token",authtoken.authtoken)
+    
+    router.push('/');
+    // window.location.reload()
+  }
 
   // Get all products
   const getProducts = async () => {
@@ -21,7 +59,7 @@ const ProductState = ({ children }) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ1OTM5ZTcwODA1ODNkMTY4ZTA0NGVkIn0sImlhdCI6MTY4MzU2OTEyN30.smEdVJQ2Fc2fL5SxrTYofEOcLy4OtoEaCQPn3ifCCzg'
+        'auth-token': localStorage.getItem("auth-token")
       },
     });
     const data = await response.json()
@@ -39,7 +77,7 @@ const ProductState = ({ children }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ1OTM5ZTcwODA1ODNkMTY4ZTA0NGVkIn0sImlhdCI6MTY4MzU2OTEyN30.smEdVJQ2Fc2fL5SxrTYofEOcLy4OtoEaCQPn3ifCCzg'
+        'auth-token': localStorage.getItem("auth-token")
       },
       body: JSON.stringify([{ title, id, qty, unit, price }])
 
@@ -56,7 +94,7 @@ const ProductState = ({ children }) => {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ1OTM5ZTcwODA1ODNkMTY4ZTA0NGVkIn0sImlhdCI6MTY4MzU2OTEyN30.smEdVJQ2Fc2fL5SxrTYofEOcLy4OtoEaCQPn3ifCCzg'
+        'auth-token': localStorage.getItem("auth-token")
       },
     });
     // eslint-disable-next-line
@@ -72,7 +110,7 @@ const ProductState = ({ children }) => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ1OTM5ZTcwODA1ODNkMTY4ZTA0NGVkIn0sImlhdCI6MTY4MzU2OTEyN30.smEdVJQ2Fc2fL5SxrTYofEOcLy4OtoEaCQPn3ifCCzg'
+        'auth-token': localStorage.getItem("auth-token")
       },
       body: JSON.stringify([{ title, id, qty, unit, price }])
     });
@@ -119,7 +157,7 @@ const ProductState = ({ children }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ1OTM5ZTcwODA1ODNkMTY4ZTA0NGVkIn0sImlhdCI6MTY4MzU2OTEyN30.smEdVJQ2Fc2fL5SxrTYofEOcLy4OtoEaCQPn3ifCCzg'
+          'auth-token': localStorage.getItem("auth-token")
         },
         body: JSON.stringify({
           product: cartList,
@@ -144,7 +182,7 @@ const ProductState = ({ children }) => {
 
 
   return (
-    <ProductContext.Provider value={{ products, getProducts, addProduct, deleteProduct, editProduct, setSubTotal, subTotal, setCartList, cartList, setCartItem, cartItem, addSellsProduct }}>
+    <ProductContext.Provider value={{ products, getProducts, addProduct, deleteProduct, editProduct, setSubTotal, subTotal, setCartList, cartList, setCartItem, cartItem, addSellsProduct, logIn, signUp, authToken, setAuthToken}}>
       {children}
     </ProductContext.Provider>
   )
