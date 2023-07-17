@@ -13,6 +13,7 @@ const ProductState = ({ children }) => {
   const [cartList, setCartList] = useState([{ title: "", id: "", qty: "", price: "" }]);
   const [cartItem, setCartItem] = useState([]);
   const [authToken, setAuthToken] = useState('');
+  const [salesData, setSalesData] = useState([]);
 
   // console.log(products)
 
@@ -178,11 +179,37 @@ const ProductState = ({ children }) => {
     } catch (error) {
       throw new Error(error.message);
     }
+
+    
+    
+    
+  };
+
+  // Get sells data between two date
+
+  const rangeSellData = async (stDate, enDate) => {
+    const startDate = '2023-01-01'; // Replace with your desired start date
+    const endDate = '2023-12-31'; // Replace with your desired end date
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/sells/sellsbardata?startDate=2023-01-01&endDate=2023-12-31`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem("auth-token")
+        },
+      });
+      const data = await response.json()
+      
+      setSalesData(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
 
   return (
-    <ProductContext.Provider value={{ products, getProducts, addProduct, deleteProduct, editProduct, setSubTotal, subTotal, setCartList, cartList, setCartItem, cartItem, addSellsProduct, logIn, signUp, authToken, setAuthToken}}>
+    <ProductContext.Provider value={{ products, getProducts, addProduct, deleteProduct, editProduct, setSubTotal, subTotal, setCartList, cartList, setCartItem, cartItem, addSellsProduct, logIn, signUp, authToken, setAuthToken,salesData, setSalesData, rangeSellData}}>
       {children}
     </ProductContext.Provider>
   )
