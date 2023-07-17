@@ -2,10 +2,12 @@
 import React, { useContext, useState } from 'react';
 import ProductContext from '@/app/context/ProductContext';
 import Styles from "@/app/styles/chackout.module.css"
+import {useRouter} from 'next/navigation';
 
 function Page() {
+  const router = useRouter();
   const context = useContext(ProductContext);
-  const { cartList, subTotal, addSellsProduct } = context;
+  const { cartList, subTotal, addSellsProduct ,setCartList} = context;
   const [selectedPayment, setSelectedPayment] = useState('');
   const [cashAmount, setCashAmount] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -29,20 +31,26 @@ function Page() {
           // Save cartList, subTotal, and returnAmount to MongoDB database
 
           await addSellsProduct(cartList, cashAmount, subTotal, returnAmount, selectedPayment, orderId);
+          setCartList([{ title: "", id: "", qty: "", price: "" }])
+          router.push("/")
 
-          // console.log('Saving to MongoDB:', cartList, subTotal, returnAmount);
+          // console.log('Saving to MongoDB: >', cartList, subTotal, returnAmount);
         } catch (error) {
           console.error('Failed to save sells product:', error);
         }
       }
       else if (cashAmount === subTotal) {
 
+        
+
         const returnAmount = cashAmount - subTotal;
 
         try {
           // Save cartList, subTotal, and returnAmount to MongoDB database
           await addSellsProduct(cartList, cashAmount, subTotal, returnAmount, selectedPayment, orderId);
-          // console.log('Saving to MongoDB:', cartList, subTotal,cashAmount);
+          setCartList([{ title: "", id: "", qty: "", price: "" }])
+          router.push("/")
+          // console.log('Saving to MongoDB on ===:', cartList, subTotal,cashAmount);
         } catch (error) {
           console.error('Failed to save sells product:', error);
         }
@@ -98,7 +106,7 @@ function Page() {
               type="number"
               name="cashAmount"
               value={cashAmount}
-              onChange={(event) => setCashAmount(event.target.value)}
+              onChange={(event) => setCashAmount(Number(event.target.value))}
               placeholder="Enter cash amount"
               className={Styles.inputPayamount}
             />
