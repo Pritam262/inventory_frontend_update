@@ -1,41 +1,31 @@
 "use client"
 import React, { useContext, useEffect } from 'react'
-import ProductContext from '@/app/context/ProductContext'
-import LineChart from './LineChart'
-function Sells() {
-  const context = useContext(ProductContext)
-  const { rangeSellData, salesData } = context
-  useEffect(() => {
-    rangeSellData();
 
+import LineChart from './LineChart'
+import ProductContext from '@/app/context/ProductContext'
+function Sells({props}) {
+
+  const context = useContext(ProductContext)
+  const { rangeSellData, salesData} = context
+
+  const {startDate, endDate} = props
+
+  // console.log(startDate.startDate, endDate.endDate)
+  // const { startDate,endDate} = context
+  useEffect(() => {
+    rangeSellData(startDate,endDate);
 
   }, [1000])
 
   // console.log(salesData)
 
-  // console.log(salesData)
+  // console.log(salesData.salesData)
   return (
-   /*  <>
-      {Array.isArray(salesData.salesData) ? (
-        salesData.salesData.map((item, index) =>
-          <div key={index}><p>Date: {item.date}</p>
-            <ul>
-              {item.product.map((productItem, productIndex) => (
-                <li key={productIndex}>
-                  Title: {productItem.title} - Sells: {productItem.totalprice}
-                </li>
-              ))}
-            </ul>
-            <p>Total Price: {item.totalprice}</p>
-          </div>
-        ))
-      ) : (
-        <p>No sales data available.</p>
-      )}
-    </> */
-    <div>
-      <h1>Sales line Chart</h1>
+    <div style={{ width: '100%', minWidth: '800px',}}>
+      <h1>Sales Chart - between {salesData.salesData===undefined?"No date":salesData.salesData[0].date} and  {salesData.salesData===undefined?"No date":salesData.salesData[salesData.salesData.length - 1].date}</h1>
+      
       <LineChart salesData={salesData.salesData}/>
+      
     </div>
   )
 }

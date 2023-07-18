@@ -14,6 +14,8 @@ const ProductState = ({ children }) => {
   const [cartItem, setCartItem] = useState([]);
   const [authToken, setAuthToken] = useState('');
   const [salesData, setSalesData] = useState([]);
+  // const [startDate, setStartDate] = useState("");
+  // const [endDate, setEndDate] = useState("");
 
   // console.log(products)
 
@@ -187,12 +189,12 @@ const ProductState = ({ children }) => {
 
   // Get sells data between two date
 
-  const rangeSellData = async (stDate, enDate) => {
-    const startDate = '2023-01-01'; // Replace with your desired start date
-    const endDate = '2023-12-31'; // Replace with your desired end date
+  const rangeSellData = async (startDate, endDate) => {
+    const stDate = startDate; // Replace with your desired start date
+    const enDate = endDate; // Replace with your desired end date
 
     try {
-      const response = await fetch(`http://localhost:3000/api/sells/sellsbardata?startDate=2023-01-01&endDate=2023-12-31`, {
+      const response = await fetch(`http://localhost:3000/api/sells/sellsbardata?startDate=${startDate}&endDate=${endDate}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

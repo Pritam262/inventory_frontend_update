@@ -15,9 +15,14 @@ const LineChart = ({ salesData }) => {
           {
             label: 'Total Price',
             data: salesData.map((data) => data.totalprice),
-            fill: false,
+            fill: true,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1,
+        
+            font: {
+              size: 25,
+              color: 'red'
+            }
           },
         ],
       };
@@ -29,8 +34,8 @@ const LineChart = ({ salesData }) => {
             display: true,
             text: 'Sales Line Chart',
             font: {
-              size: 18,
-              color: 'white'
+              size: 20,
+              color: 'red'
             }
           }
         },
@@ -40,7 +45,7 @@ const LineChart = ({ salesData }) => {
             time: {
               unit: 'day',
               displayFormats: {
-                day: 'YYYY-MM-DD',
+                day: 'DD-MM-YYYY',
               },
             },
             ticks: {
@@ -54,7 +59,7 @@ const LineChart = ({ salesData }) => {
             ticks: {
               stepSize: 1000,
               callback: function (value) {
-                return '$' + value;
+                return '₹' + value;
               },
               color: 'white' // y-axis font color
             },
@@ -75,7 +80,7 @@ const LineChart = ({ salesData }) => {
     }
   }, [salesData]);
 
-  return <canvas ref={chartRef} style={{ width: '800px', height: '400px' , color:"#fff"}}/>;
+  return <canvas ref={chartRef} style={{ width: "100%", height: '400px' , color:"blue"}}/>;
 };
 
 export default LineChart;
