@@ -1,6 +1,7 @@
 "use client"
 import React, { useContext, useEffect } from 'react'
 import ProductContext from '@/app/context/ProductContext'
+import LineChart from './LineChart'
 function Sells() {
   const context = useContext(ProductContext)
   const { rangeSellData, salesData } = context
@@ -14,15 +15,14 @@ function Sells() {
 
   // console.log(salesData)
   return (
-    <>
+   /*  <>
       {Array.isArray(salesData.salesData) ? (
-        salesData.salesData.map((item, index) => (
-          <div key={index}>
-            <p>Date: {item.date}</p>
+        salesData.salesData.map((item, index) =>
+          <div key={index}><p>Date: {item.date}</p>
             <ul>
               {item.product.map((productItem, productIndex) => (
                 <li key={productIndex}>
-                  Title: {productItem.title} - Sells: {productItem.sells}
+                  Title: {productItem.title} - Sells: {productItem.totalprice}
                 </li>
               ))}
             </ul>
@@ -32,7 +32,11 @@ function Sells() {
       ) : (
         <p>No sales data available.</p>
       )}
-    </>
+    </> */
+    <div>
+      <h1>Sales line Chart</h1>
+      <LineChart salesData={salesData.salesData}/>
+    </div>
   )
 }
 
