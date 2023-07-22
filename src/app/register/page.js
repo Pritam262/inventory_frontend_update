@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import Styles from "../styles/dashboard.module.css"
 import { Router } from 'next/router'
-function page() {
+function Page() {
     const [credencials, setCredencials] = useState({ name: "", email: "", password: "", address: "" })
 
     const handleSubmit = async (e) => {
@@ -52,4 +52,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

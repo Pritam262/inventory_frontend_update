@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react'
 import ProductContext from '../context/ProductContext'
 import Styles from '@/app/styles/auth.module.css'
 
-function page() {
+function Page() {
   const context = useContext(ProductContext)
   const { logIn , signUp} = (context)
 
@@ -27,7 +27,7 @@ function page() {
     if (authType === 'login') {
       logIn(loginData.email, loginData.password)
       // console.log("Login Data", loginData)
-      console.log(process.env.HOST_URL)
+      
 
     }
     else {
@@ -60,7 +60,7 @@ function page() {
           <input className={Styles.input} name='password' id='password' type="password" placeholder='Enter your password' value={loginData.password} onChange={onChange} />
         </div>
         <button type="submit" className={Styles.btn} onClick={handleClick}>Login</button>
-        <p >You dont' have an account <button onClick={autheType}> click here</button></p>
+        <p >You dont`&apos;` have an account <button onClick={autheType}> click here</button></p>
 
 
       </>) :
@@ -76,7 +76,7 @@ function page() {
           </div>
 
           <button type="submit" className={Styles.btn} onClick={handleClick}>Sign Up</button>
-          <p >You dont' have an account <button onClick={autheType}> click here</button></p>
+          <p >You dont`&apos;` have an account <button onClick={autheType}> click here</button></p>
         </>
 
       }
@@ -84,4 +84,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

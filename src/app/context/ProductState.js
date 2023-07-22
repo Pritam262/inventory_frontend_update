@@ -1,6 +1,6 @@
 "use client"
 import ProductContext from "./ProductContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from 'next/navigation';
 
 const ProductState = ({ children }) => {

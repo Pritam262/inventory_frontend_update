@@ -1,9 +1,9 @@
 import React from 'react'
 
-function page() {
+function Page() {
   return (
     <div>Contact page</div>
   )
 }
 
-export default page
+export default Page
