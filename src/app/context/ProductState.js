@@ -194,7 +194,7 @@ const ProductState = ({ children }) => {
     const enDate = endDate; // Replace with your desired end date
 
     try {
-      const response = await fetch(`http://localhost:3000/api/sells/sellsbardata?startDate=${startDate}&endDate=${endDate}`, {
+      const response = await fetch(`${host}api/sells/sellsbardata?startDate=${startDate}&endDate=${endDate}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

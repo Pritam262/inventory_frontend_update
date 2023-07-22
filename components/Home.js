@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import ProductContext from '@/app/context/ProductContext';
 function Home() {
-  const host = "http://localhost:3000"
+  // const host = "http://localhost:3000"
   const context = useContext(ProductContext)
   const {subTotal,setSubTotal,cartList,setCartList,cartItem,setCartItem} = context
   // Declare the default variable with its value
