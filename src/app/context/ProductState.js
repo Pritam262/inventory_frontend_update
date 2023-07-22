@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 const ProductState = ({ children }) => {
   const router = useRouter();
-  const host = "http://localhost:3000"
+  const host = "http://13.48.56.199"
   // const productInitial = []
   const [products, setproducts] = useState([])
 

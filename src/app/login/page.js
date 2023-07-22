@@ -26,12 +26,13 @@ function page() {
     e.preventDefault();
     if (authType === 'login') {
       logIn(loginData.email, loginData.password)
-      console.log("Login Data", loginData)
+      // console.log("Login Data", loginData)
+      console.log(process.env.HOST_URL)
 
     }
     else {
       signUp(regData.name,regData.email, regData.password, regData.password)
-      console.log("SignUp data", regData)
+      // console.log("SignUp data", regData)
     }
   }
 

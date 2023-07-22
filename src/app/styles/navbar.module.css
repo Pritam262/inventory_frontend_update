@@ -6,10 +6,12 @@
     justify-content: space-between;
     padding: 0 5rem;
     position: relative;
+    /* background-color: #9f0; */
 }
 
 .ul {
     list-style: none;
+    
 }
 
 .navbar::after {
@@ -30,4 +32,23 @@
     /* Adjust the height as per your preference */
     background: linear-gradient(to right, #ff0000 0%, #00ff00 50%, #0000ff 100%);
     /* Replace the color codes and percentages with your desired values */
+}
+
+.btn {
+    padding: .5rem 1rem;
+    font-size: 20px;
+    background-color: transparent;
+    /* color: #000; */
+
+
+    border: 1px solid transparent;
+    background-image: linear-gradient(#000, #000),
+        linear-gradient(120deg, #f09 0%, #0ff 50%, #9f0 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border-radius: .2em;
+    background-size: 200% 100%;
+
+
+    font-family: 'Dancing Script', cursive;
 }

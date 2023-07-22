@@ -25,7 +25,7 @@ function Navbar() {
   return (
     <nav className={Styles.navbar}>
       <div className="logo">Logo</div>
-      <ul className={`${Common['df']} ${Common['jc_sb']} ${Common['wh_30']} ${Styles.ul}`}>
+      <ul className={`${Common['df']} ${Common['jc_sb']} ${Common['wh_30']} ${Common['ai_c']} ${Styles.ul}`}>
         {authToken ? (
           <>
             <li>
@@ -35,7 +35,7 @@ function Navbar() {
               <Link href="/contact">Contact</Link>
             </li>
             <li>
-              <button onClick={logout}>Logout</button>
+              <button onClick={logout} className={Styles.btn}>Logout</button>
             </li>
           </>
         ) : (
@@ -44,7 +44,8 @@ function Navbar() {
               <Link href="/contact">Contact</Link>
             </li>
             <li>
-                <Link href="/login">Login</Link>
+              <button className={Styles.btn} onClick={()=>router.push("/login")}> Login</button>
+                {/* <Link href="/login">Login</Link> */}
             </li>
           </>
         )}
