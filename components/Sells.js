@@ -21,7 +21,7 @@ function Sells({props}) {
 
   // console.log(salesData.salesData)
   return (
-    <div style={{ width: '100%', minWidth: '800px',}}>
+    <div style={{ width: '100%', minWidth: '800px', padding:"1rem"}}>
       <h1>Sales Chart - between {salesData.salesData===undefined?"No date":salesData.salesData[0].date} and  {salesData.salesData===undefined?"No date":salesData.salesData[salesData.salesData.length - 1].date}</h1>
       
       <LineChart salesData={salesData.salesData}/>

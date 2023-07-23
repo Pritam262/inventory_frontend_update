@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import moment from 'moment';
 import 'chartjs-adapter-moment';
+import Styles from "@/app/styles/linechart.module.css"
 
 const LineChart = ({ salesData }) => {
   const chartRef = useRef(null);
@@ -28,14 +29,14 @@ const LineChart = ({ salesData }) => {
       };
 
       const chartOptions = {
-        responsive: true,
+        
         plugins: {
           title: {
             display: true,
             text: 'Sales Line Chart',
             font: {
-              size: 20,
-              color: 'red'
+              size: 30,
+              color: 'colral'
             }
           }
         },
@@ -80,7 +81,7 @@ const LineChart = ({ salesData }) => {
     }
   }, [salesData]);
 
-  return <canvas ref={chartRef} style={{ width: "100%", height: '400px' , color:"blue"}}/>;
+  return <canvas ref={chartRef} className={Styles.canvas}/>;
 };
 
 export default LineChart;

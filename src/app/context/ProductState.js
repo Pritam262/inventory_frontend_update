@@ -136,23 +136,6 @@ const ProductState = ({ children }) => {
   }
 
   // // Add a sells product
-  // const addSellsProduct = async (cartList,cashAmount,subTotal,returnAmount) => {
-  //   // TODO: API Call
-  //   // API Call 
-  //   const response = await fetch(`${host}/api/sells/addproduct`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ1OTM5ZTcwODA1ODNkMTY4ZTA0NGVkIn0sImlhdCI6MTY4MzU2OTEyN30.smEdVJQ2Fc2fL5SxrTYofEOcLy4OtoEaCQPn3ifCCzg'
-  //     },
-  //     body: JSON.stringify([{"productitem":cartList},{'totalprice':subTotal}, {'amount':cashAmount},{"returnamount":returnAmount}])
-
-
-  //   });
-
-  //   const product = await response.json();
-  //   setproducts(products.concat(product))
-  // }
 
   const addSellsProduct = async (cartList, cashAmount, subTotal, returnAmount,selectedPayment,orderId) => {
     try {
@@ -194,7 +177,7 @@ const ProductState = ({ children }) => {
     const enDate = endDate; // Replace with your desired end date
 
     try {
-      const response = await fetch(`${host}api/sells/sellsbardata?startDate=${startDate}&endDate=${endDate}`, {
+      const response = await fetch(`${host}/api/sells/sellsbardata?startDate=${startDate}&endDate=${endDate}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
