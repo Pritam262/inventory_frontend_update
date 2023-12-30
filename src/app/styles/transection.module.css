@@ -1,0 +1,80 @@
+/*
+Transection history page
+*/
+.transectionComponent {
+
+    width: calc(100vw - 15vw);
+    height: calc(100vh - 8vh);
+    padding: 0 10px;
+    /* color: #000; */
+    /* background-color: blueviolet; */
+    /* position: relative; */
+}
+
+.tableHeading {
+    /* background-color: brown; */
+    padding: .5rem .5rem;
+    /* position: fixed; */
+
+}
+
+.tableData {
+    font-size: 15px;
+    /* background-color: blueviolet; */
+    padding: .5rem .5rem;
+}
+
+/* .tableData:last-child{
+    height: max-content;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+} */
+.header {
+    /* width: 20%; */
+    width: fit-content;
+    /* height: 80px; */
+    display: flex;
+    align-items: center;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    margin: 5px 0;
+    /* background-color: blueviolet; */
+}
+
+.header input {
+    background-color: transparent;
+    /* color: #fff; */
+    padding: .5rem;
+    margin-left: 5px;
+    /* border: 1px solid #fff; */
+}
+
+/* .header input:nth-child(2){
+    margin-left: 5px;
+} */
+
+
+.model{
+    width: 30vw;
+    height: 70vh;
+    /* background-color: rgb(61, 61, 61); */
+    padding: 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    border-radius: 10px;
+    top: 6%;
+    left: 20%;
+    transform: translate(20%, 6%);
+}
+.model .closeIcon{
+    cursor: pointer;
+    position: absolute;
+    top: 2%;
+    right: 5%;
+    transform: translate(-5%, 2%);
+}
+.hidden{
+    display: none;
+}

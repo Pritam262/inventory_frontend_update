@@ -1,6 +1,6 @@
 .container {
     width: 100vw;
-    height: 90vh;
+    height: 92vh;
     display: flex;
     /* color: blueviolet; */
     color: #fff;
@@ -11,6 +11,14 @@
     height: auto;
     /* background-color: azure; */
     background-color: #302f2f;
+    position: relative;
+
+}
+.lightLeftSide {
+    width: 20vw;
+    height: auto;
+    /* background-color: azure; */
+    background-color: #e0e0e0;
     position: relative;
 
 }
@@ -33,7 +41,13 @@
     display: flex;
     justify-content: center;
 }
-
+.lightRightSide{
+    width: 100%;
+    /* background-color: aqua; */
+    background-color: #d0d0d0;
+    display: flex;
+    justify-content: center;
+}
 .heading {
     text-align: center;
     padding: .5rem;
@@ -48,7 +62,18 @@
  
     /* background-color: blue; */
 }
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    /* Disable input type number increment and decrement icon */
+}
 
+/* Reset the background color for autofill */
+.input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px transparent inset;
+    background-color: transparent !important; /* Set transparent background */
+    color: black !important; /* Set black text color */
+}
 .input {
     width: 20%;
     padding: .8rem;
@@ -57,11 +82,36 @@
     background-color: #302f2f;
 }
 
-.icon {
+.input:nth-child(2){
+    margin-left: 5px;
+}
+.input:nth-child(3){
+    margin-left: 5px;
+}
+.input:nth-child(4){
+    margin-left: 5px;
+}
+.lightInput {
+    width: 20%;
+    padding: .8rem;
+    color: #000000;
+    font-size: 18px;
+    background-color: #e5e5e5;
+    border: 1px solid #000000;
+}
+
+.darkIcon {
     margin: 0 .5rem;
     font-size: 25px;
     /* color: #000; */
     color: #fff;
+
+}
+.lightIcon {
+    margin: 0 .5rem;
+    font-size: 25px;
+    /* color: #000; */
+    color: #000000;
 
 }
 .buttonOption{

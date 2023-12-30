@@ -10,7 +10,7 @@ import ProductContext from '@/app/context/ProductContext';
 function Home() {
   // const host = "http://localhost:3000"
   const context = useContext(ProductContext)
-  const {subTotal,setSubTotal,cartList,setCartList,cartItem,setCartItem} = context
+  const {subTotal,setSubTotal,cartList,setCartList,cartItem,setCartItem, theme,userTheme} = context
   // Declare the default variable with its value
 
   // const [subTotal, setSubTotal] = useState(0);
@@ -166,14 +166,14 @@ function Home() {
   return (
     <div className={Styles.container}>
 
-      <div className={Styles.leftSide}>
+      <div className={(theme==="system")? userTheme()==='dark'?Styles.leftSide:Styles.lightLeftSide:(theme==='dark')?Styles.leftSide :Styles.lightLeftSide}>
         {/* Show the cart Item in the left site */}
         {cartItem.map((item) => (
           <CartItem  key={item.cartCode} cartCode={item.cartCode} totalPrice={item.totalPrice} setCartList={setCartList} getStorageData={getStorageData}/>
         ))}
       </div>
 
-      <div className={Styles.rightSide}>
+      <div className={(theme==="system")? userTheme()==='dark'?Styles.rightSide:Styles.lightRightSide:(theme==='dark')?Styles.rightSide :Styles.lightRightSide}>
         <form autoComplete="off" className={Styles.addCart}>
           <h4 className={Styles.heading}>Buy Product</h4>
 
@@ -184,7 +184,7 @@ function Home() {
               <div className={Styles.productDetails} key={index}>
                 <input
                   type="text"
-                  className={Styles.input}
+                  className={(theme==="system")? userTheme()==='dark'?Styles.input:Styles.lightInput:(theme==='dark')?Styles.input :Styles.lightInput}
                   name="title"
                   placeholder="Product name"
                   onChange={(event) => handleChange(index, event)}
@@ -193,7 +193,7 @@ function Home() {
                 />
                 <input
                   type="text"
-                  className={Styles.input}
+                  className={(theme==="system")? userTheme()==='dark'?Styles.input:Styles.lightInput:(theme==='dark')?Styles.input :Styles.lightInput}
                   name="id"
                   placeholder="Product Id"
                   onChange={(event) => handleChange(index, event)}
@@ -202,7 +202,7 @@ function Home() {
                 />
                 <input
                   type="number"
-                  className={Styles.input}
+                  className={(theme==="system")? userTheme()==='dark'?Styles.input:Styles.lightInput:(theme==='dark')?Styles.input :Styles.lightInput}
                   name="qty"
                   placeholder="Product quantity"
                   onChange={(event) => handleChange(index, event)}
@@ -211,7 +211,7 @@ function Home() {
                 />
                 <input
                   type="number"
-                  className={Styles.input}
+                  className={(theme==="system")? userTheme()==='dark'?Styles.input:Styles.lightInput:(theme==='dark')?Styles.input :Styles.lightInput}
                   name="price"
                   placeholder="Product Price"
                   onChange={(event) => handleChange(index, event)}
@@ -220,12 +220,12 @@ function Home() {
                 />
 
                 {cartList.length > 1 && (
-                  <AiOutlineMinusCircle className={Styles.icon} onClick={() => removeInputList(index)} />
+                  <AiOutlineMinusCircle className={(theme==="system")? userTheme()==='dark'?Styles.darkIcon:Styles.lightIcon:(theme==='dark')?Styles.darkIcon :Styles.lightIcon} onClick={() => removeInputList(index)} />
                 )}
 
 
 
-                {cartList.length - 1 === index && <AiOutlinePlusCircle className={Styles.icon} onClick={addInputList} />}
+                {cartList.length - 1 === index && <AiOutlinePlusCircle className={(theme==="system")? userTheme()==='dark'?Styles.darkIcon:Styles.lightIcon:(theme==='dark')?Styles.darkIcon :Styles.lightIcon} onClick={addInputList} />}
               </div>
             );
           })}

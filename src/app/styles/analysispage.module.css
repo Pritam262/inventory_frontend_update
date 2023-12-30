@@ -1,0 +1,134 @@
+.analysisComponent {
+
+    width: calc(100vw - 15vw);
+    height: calc(100vh - 8vh);
+    padding: 0 10px;
+    /* color: #000; */
+    /* background-color: blueviolet; */
+}
+
+.ml_10 {
+    margin-left: 10px;
+}
+
+.subBtn {
+    padding: 2px 5px;
+}
+
+.header {
+    /* width: 20%; */
+    width: fit-content;
+    /* height: 80px; */
+    display: flex;
+    align-items: center;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    margin: 5px 0;
+    /* background-color: blueviolet; */
+}
+
+.header input {
+    background-color: transparent;
+    /* color: #fff; */
+    padding: .5rem;
+    /* margin-left: 5px; */
+    /* border: 1px solid #fff; */
+}
+.header input:nth-child(2){
+    margin-left: 5px;
+}
+.details {
+    width: 100%;
+    height: fit-content;
+    /* padding: 5px; */
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card {
+    width: 350px;
+    height: 150px;
+    /* border: 1px solid #000; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chartComponent {
+    /* height: 505px; */
+    height: fit-content;
+    /* height: 350px; */
+    /* border: 1px solid #000; */
+}
+
+.graphCom {
+    width: 100%;
+    /* height: 100%; */
+    height: 330px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* border: 1px solid #000; */
+    margin: 5px 0 0 0;
+    /* background-color: bisque; */
+}
+
+.tableComp {
+    width: 39%;
+    height: 100%;
+    /* background-color: bisque; */
+    /* border: 1px solid #000; */
+    overflow-y: auto;
+}
+
+.tableComp::-webkit-scrollbar {
+    width: 10px;
+}
+
+.tableComp::-webkit-scrollbar-track {
+    background-color: #00000010;
+}
+
+.tableComp::-webkit-scrollbar-thumb {
+    background-color: #383636d7;
+    border-radius: 50px;
+}
+
+.tableHeading {
+    /* background-color: brown; */
+    padding: .5rem .5rem;
+    /* position: fixed; */
+
+}
+
+.tableData {
+    font-size: 15px;
+    /* background-color: blueviolet; */
+    padding: 0 .5rem;
+}
+
+.tableRow {
+    /* background-color: blanchedalmond; */
+    border-bottom: 1px solid #000;
+}
+
+.categoryComp {
+    width: 60%;
+    height: 100%;
+    /* background-color: bisque; */
+    /* border: 1px solid #000; */
+}
+
+.selectionOption {
+    display: flex;
+    margin: 10px 5px;
+}
+
+.optionTag {
+    margin-left: 15px;
+    color: #000;
+    background-color: transparent;
+}

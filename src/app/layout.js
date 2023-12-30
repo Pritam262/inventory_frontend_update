@@ -5,7 +5,7 @@ import ProductState from './context/ProductState'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'inventory management - App',
+  title: 'IMS - App',
   description: 'This is a inventory management system',
 }
 
